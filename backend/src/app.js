@@ -18,7 +18,7 @@ app.set('host', process.env.HOST || '127.0.0.1');
 app.use(cors());
 
 app.use((req, res, next) => {
-	if (!req.query.name === process.env.USER_MONGODB) {
+	if (!req.body.nameAdmin === process.env.USER_MONGODB || !req.body.passwordAdmin === process.env.PASSWORD_MONGODB) {
 		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
 		return;
 	}

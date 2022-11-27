@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg';
 // import './App.css';
 import Navbar from './components/Navbar';
 import SignIn from './components/SingIn';
+import SignUp from './components/SignUp';
 
 function App() {
 	const [count, setCount] = useState(0);
@@ -11,6 +12,7 @@ function App() {
 		<>
 			<Navbar />
 			<SignIn />
+			<SignUp />
 			<div className="App">
 				<div>
 					<a href="https://vitejs.dev" target="_blank">

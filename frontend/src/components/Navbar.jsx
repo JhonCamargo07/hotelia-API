@@ -67,8 +67,8 @@ function Navbar() {
 										type="button"
 										className="btn btn-primary btn-lg"
 										data-bs-toggle="modal"
-										data-bs-target="#exampleModal">
-										Ingresar
+										data-bs-target="#SignIn">
+										Iniciar sesi&#243;n
 									</button>
 								</a>
 							</li>

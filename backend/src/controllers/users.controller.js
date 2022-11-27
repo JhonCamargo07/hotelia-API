@@ -3,6 +3,10 @@ const usersCtrl = {};
 const User = require('./../models/User');
 
 usersCtrl.SignUp = async (req, res) => {
+	if (!req.body.email || !req.body.password) {
+		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
+		return;
+	}
 	const errors = [];
 
 	const { name, email, password, confirm_password } = req.body;
@@ -10,8 +14,8 @@ usersCtrl.SignUp = async (req, res) => {
 	if (password != confirm_password) {
 		errors.push({ title: 'Passwords do no match' });
 	}
-	if (password.length < 4) {
-		errors.push({ title: 'Passwords must be at least 4 characteres.' });
+	if (password.length < 10) {
+		errors.push({ title: 'Passwords must be at least 10 characteres.' });
 	}
 
 	if (errors.length > 0) {
@@ -24,7 +28,7 @@ usersCtrl.SignUp = async (req, res) => {
 			const newUser = new User({ name, email, password });
 			newUser.password = await newUser.encryptPassword(password);
 			await newUser.save();
-			res.json({ success: true, message: `Usuario registrado exitosamente` });
+			res.json({ success: true, message: `Usuario registrado exitosamente`, data: newUser });
 		}
 	}
 };
@@ -37,20 +41,24 @@ usersCtrl.SignIn = async (req, res) => {
 	const { name, email, password } = req.body;
 	const UserNuevo = new User({ name, email, password });
 
-	const user = await User.find({ email: email })
+	const user = await User.findOne({ email: email })
 		.then((user) => {
 			if (!user) {
 				res.json({ success: false, message: 'Las credenciales son incorrectas' });
 			} else {
-				if (!UserNuevo.matchPassword(password, user.password)) {
-					res.json({ success: false, message: 'Las credenciales son incorrectas' });
-				} else {
+				UserNuevo.matchPassword(password, user.password).then((isCorrrect) => {
+					if (!isCorrrect) {
+						res.json({ success: false, message: 'Las credenciales son incorrectas' });
+						return;
+					}
 					res.json({ success: true, message: 'Usuario correcto', data: user });
-				}
+					return user;
+				});
 			}
 		})
 		.catch((err) => {
 			res.json({ success: false, message: `Error del sistema ${err}` });
+			return err;
 		});
 };
 
