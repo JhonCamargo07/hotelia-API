@@ -1,0 +1,67 @@
+$background: #f4f4f4;
+$segundo-bg: #f9f9f9;
+$white: #fff;
+$black: #000;
+$success: #00d200;
+$primary: #2a72c0;
+$hover: #44e144;
+$info: #2a72c0;
+$danger: #f66060;
+$secundary: #000;
+$orange: #ffa500;
+$shadow: rgba(0, 0, 0, 0.5);
+$bg-title: rgba(255, 255, 255, 0.3);
+$gray: #e9ecef;
+$bg-gray: #f7f7f8;
+$bg-blue: #0a121d;
+$blue: #0e244c;
+$font: 'Montserrat', sans-serif;
+$max-width: 1600px;
+
+@mixin grid($cols, $gap) {
+	display: grid;
+	grid-template-columns: repeat($cols, 1fr);
+	gap: $gap;
+	@media screen and (max-width: 480px) {
+		grid-template-columns: 1fr;
+		// gap: 0em;
+	}
+}
+
+@mixin flex($direction: column, $corte: wrap, $just: center, $align: center) {
+	display: flex;
+	flex-flow: $direction $corte;
+	justify-content: $just;
+	align-items: $align;
+}
+
+@mixin responsive($width: 480px) {
+	@media screen and (max-width: $width) {
+		@content;
+	}
+}
+
+@mixin responsiveFull($width: 1601px) {
+	@media screen and (min-width: $width) {
+		@content;
+	}
+}
+
+@mixin btn {
+	color: $black;
+	cursor: pointer;
+	font-weight: bold;
+	padding: 0.9375rem;
+	background: $white;
+	border-radius: 0.3125rem;
+	transition: 0.3s ease all;
+	border: 0.125rem solid transparent;
+	&:hover {
+		color: $white;
+		background-color: $primary;
+	}
+}
+
+@mixin shadow($color) {
+	box-shadow: 0rem 0rem 0.3125rem $color;
+}

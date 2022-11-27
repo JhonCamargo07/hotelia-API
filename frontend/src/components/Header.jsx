@@ -3,76 +3,26 @@ import React from 'react';
 export default function Header() {
 	return (
 		<>
-			<nav className="navbar navbar-expand-lg bg-light">
-				<div className="container-fluid">
-					<a className="navbar-brand" href="#">
-						Navbar
-					</a>
-					<button
-						className="navbar-toggler"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent"
-						aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span className="navbar-toggler-icon"></span>
-					</button>
-					<div className="collapse navbar-collapse" id="navbarSupportedContent">
-						<ul className="navbar-nav me-auto mb-2 mb-lg-0">
-							<li className="nav-item">
-								<a className="nav-link active" aria-current="page" href="#">
-									Home
-								</a>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link" href="#">
-									Link
-								</a>
-							</li>
-							<li className="nav-item dropdown">
-								<a
-									className="nav-link dropdown-toggle"
-									href="#"
-									role="button"
-									data-bs-toggle="dropdown"
-									aria-expanded="false">
-									Dropdown
-								</a>
-								<ul className="dropdown-menu">
-									<li>
-										<a className="dropdown-item" href="#">
-											Action
-										</a>
-									</li>
-									<li>
-										<a className="dropdown-item" href="#">
-											Another action
-										</a>
-									</li>
-									<li>
-										<hr className="dropdown-divider" />
-									</li>
-									<li>
-										<a className="dropdown-item" href="#">
-											Something else here
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li className="nav-item">
-								<a className="nav-link disabled">Disabled</a>
-							</li>
-						</ul>
-						<form className="d-flex" role="search">
-							<input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-							<button className="btn btn-outline-success" type="submit">
-								Search
-							</button>
-						</form>
-					</div>
+			<header className="header" id="header">
+				<a href="http://jhoncamargo.000webhostapp.com/" className="header__enlace">
+					<img src="imagenes/logo_jhon_camargo.png" loading="lazy" alt="" className="header__logo" />
+				</a>
+				<p id="error__ie"></p>
+				<nav className="header__nav">
+					<p className="header__enlaces" id="sobre_mi">
+						<i className="icono__nav fas fa-user"></i>Sobre mí
+					</p>
+					<p className="header__enlaces" id="habilidades">
+						<i className="icono__nav fas fa-toolbox"></i>Habilidades
+					</p>
+					<p className="header__enlaces" id="contacto">
+						<i className="icono__nav fas fa-id-badge"></i>Contacto
+					</p>
+				</nav>
+				<div className="hamburguesa">
+					<i className="icono icono__hamburguesa fas fa-bars" id="hamburguesa"></i>
 				</div>
-			</nav>
+			</header>
 		</>
 	);
 }
