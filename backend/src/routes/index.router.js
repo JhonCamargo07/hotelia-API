@@ -3,12 +3,12 @@ const join = require('path');
 const nodemon = require('nodemon');
 const router = Router();
 
-router.get('/', (req, res) => {
-	if (req.query.name === process.env.USER_MONGODB) {
-		res.json({ message: 'Hola mundo desde aquí, desde mi latinoamerica unida' });
+router.use((req, res, next) => {
+	if (!req.query.name === process.env.USER_MONGODB) {
+		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
 		return;
 	}
-	res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
+	next();
 });
 
 router.use((req, res) => {

@@ -3,6 +3,7 @@ const morgan = require('morgan');
 const colors = require('colors');
 const nodemon = require('nodemon');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 
@@ -10,11 +11,19 @@ const app = express();
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.text());
-
-// Setings
 app.set('appName', 'Hotelia API - Jhon Camargo');
 app.set('port', process.env.PORT || 64022);
 app.set('host', process.env.HOST || '127.0.0.1');
+
+app.use(cors());
+
+app.use((req, res, next) => {
+	if (!req.query.name === process.env.USER_MONGODB) {
+		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
+		return;
+	}
+	next();
+});
 
 app.use(require('./routes/users.router.js'));
 app.use(require('./routes/index.router.js'));

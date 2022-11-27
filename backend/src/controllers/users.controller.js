@@ -15,23 +15,23 @@ usersCtrl.SignUp = async (req, res) => {
 	}
 
 	if (errors.length > 0) {
-		res.json({ success: false, error: errors });
+		res.json({ success: false, message: errors });
 	} else {
 		const emailUser = await User.findOne({ email: email });
 		if (emailUser) {
-			res.json({ success: false, error: `El usuario ya existe, intente con otro` });
+			res.json({ success: false, message: `El usuario ya existe, intente con otro` });
 		} else {
 			const newUser = new User({ name, email, password });
 			newUser.password = await newUser.encryptPassword(password);
 			await newUser.save();
-			res.json({ success: true, error: `Usuario registrado exitosamente` });
+			res.json({ success: true, message: `Usuario registrado exitosamente` });
 		}
 	}
 };
 
 usersCtrl.SignIn = async (req, res) => {
 	if (!req.body.email || !req.body.password) {
-		res.json({ success: false, error: 'Los valores no pueden ser nulos' });
+		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	const { name, email, password } = req.body;
@@ -40,17 +40,17 @@ usersCtrl.SignIn = async (req, res) => {
 	const user = await User.find({ email: email })
 		.then((user) => {
 			if (!user) {
-				res.json({ success: false, error: 'Las credenciales son incorrectas' });
+				res.json({ success: false, message: 'Las credenciales son incorrectas' });
 			} else {
 				if (!UserNuevo.matchPassword(password, user.password)) {
-					res.json({ success: false, error: 'Las credenciales son incorrectas' });
+					res.json({ success: false, message: 'Las credenciales son incorrectas' });
 				} else {
 					res.json({ success: true, message: 'Usuario correcto', data: user });
 				}
 			}
 		})
 		.catch((err) => {
-			res.json({ success: false, error: `Error del sistema ${err}` });
+			res.json({ success: false, message: `Error del sistema ${err}` });
 		});
 };
 
