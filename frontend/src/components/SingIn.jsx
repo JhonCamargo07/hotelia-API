@@ -63,6 +63,9 @@ function SingIn() {
 										.then(function (response) {
 											setStatus(response.data.success);
 											setMessage(response.data.message);
+											setTimeout(() => {
+												setMessage(null);
+											}, 10000);
 										})
 										.catch(function (error) {
 											console.log(error);

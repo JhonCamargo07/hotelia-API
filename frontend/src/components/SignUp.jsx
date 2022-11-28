@@ -33,11 +33,16 @@ function SignUp() {
 								initialValues={{
 									name: '',
 									email: '',
+									image: null,
 									password: '',
 									passwordConfirm: '',
 								}}
 								validate={(values) => {
 									let errors = {};
+
+									if (!values.image) {
+										errors.image = 'Seleccione una imagen';
+									}
 
 									if (!values.name) {
 										errors.name = 'Por favor ingrese su nombre';
@@ -70,19 +75,23 @@ function SignUp() {
 									return errors;
 								}}
 								onSubmit={(values, { resetForm }) => {
-									let { name, email, password, passwordConfirm } = values;
+									const data = new FormData();
+									let { image, name, email, password, passwordConfirm } = values;
+									data.append('file', image);
+									data.append('name', name);
+									data.append('email', email);
+									data.append('password', password);
+									data.append('confirm_password', passwordConfirm);
+									data.append('nameAdmin', import.meta.env.VITE_USER_MONGODB);
+									data.append('passwordAdmin', import.meta.env.VITE_PASSWORD_MONGODB);
 									axios
-										.post(`${API.API_URL}/signup`, {
-											name,
-											email,
-											password,
-											confirm_password: passwordConfirm,
-											passwordAdmin: import.meta.env.VITE_REACT_APP_PASSWORD_MONGODB,
-											nameAdmin: import.meta.env.VITE_REACT_APP_USER_MONGODB,
-										})
+										.post(`${API.API_URL}/signup`, data)
 										.then(function (response) {
 											setStatus(response.data.success);
 											setMessage(response.data.message);
+											setTimeout(() => {
+												setMessage(null);
+											}, 10000);
 										})
 										.catch(function (error) {
 											console.log('Ocurrio un error: ' + error);
@@ -91,6 +100,24 @@ function SignUp() {
 								}}>
 								{({ errors }) => (
 									<Form>
+										<div className="mb-3">
+											<label htmlFor="image" className="form-label">
+												Imagen
+											</label>
+											<Field
+												type="file"
+												class="form-control"
+												id="image"
+												name="image"
+												accept="image/jpeg,image/png,image/jpg"
+												aria-describedby="inputGroupFileAddon04"
+												aria-label="Upload"
+											/>
+											<ErrorMessage
+												name="image"
+												component={() => <span className="text-danger">{errors.image}</span>}
+											/>
+										</div>
 										<div className="mb-3">
 											<label htmlFor="name" className="form-label">
 												Nombre
