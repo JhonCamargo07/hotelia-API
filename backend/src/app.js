@@ -41,6 +41,7 @@ app.use((req, res, next) => {
 app.use('/public', express.static(join(__dirname, 'public')));
 
 app.use(require('./routes/users.router.js'));
+app.use(require('./routes/room.router.js'));
 app.use(require('./routes/index.router.js'));
 
 app.listen(app.get('port'), function () {

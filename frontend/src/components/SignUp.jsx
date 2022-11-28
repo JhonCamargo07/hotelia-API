@@ -99,7 +99,7 @@ function SignUp() {
 									// resetForm();
 								}}>
 								{({ errors }) => (
-									<Form>
+									<Form encType='multipart/form-data'>
 										<div className="mb-3">
 											<label htmlFor="image" className="form-label">
 												Imagen
