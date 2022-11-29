@@ -9,7 +9,11 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 function SignUp() {
 	const [message, setMessage] = useState(null);
 	const [status, setStatus] = useState(null);
+	const [img, setImg] = useState(null);
 
+	const subirFile = (e) => {
+		setImg(e.target.files[0]);
+	};
 	const expresions = {
 		name: /^[a-zA-ZÀ-ÿ\s]{7,60}$/,
 		email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
@@ -76,8 +80,8 @@ function SignUp() {
 								}}
 								onSubmit={(values, { resetForm }) => {
 									const data = new FormData();
-									let { image, name, email, password, passwordConfirm } = values;
-									data.append('file', image);
+									let { name, email, password, passwordConfirm } = values;
+									data.append('image', img);
 									data.append('name', name);
 									data.append('email', email);
 									data.append('password', password);
@@ -99,16 +103,19 @@ function SignUp() {
 									// resetForm();
 								}}>
 								{({ errors }) => (
-									<Form encType='multipart/form-data'>
+									<Form encType="multipart/form-data">
 										<div className="mb-3">
 											<label htmlFor="image" className="form-label">
 												Imagen
 											</label>
-											<Field
+											<input
 												type="file"
-												class="form-control"
+												className="form-control"
 												id="image"
 												name="image"
+												onChange={(e) => {
+													subirFile(e);
+												}}
 												accept="image/jpeg,image/png,image/jpg"
 												aria-describedby="inputGroupFileAddon04"
 												aria-label="Upload"
@@ -117,6 +124,8 @@ function SignUp() {
 												name="image"
 												component={() => <span className="text-danger">{errors.image}</span>}
 											/>
+											{'Imagen=' + img}
+											{img != null && 'La imagen: ' + img[0]}
 										</div>
 										<div className="mb-3">
 											<label htmlFor="name" className="form-label">

@@ -2,10 +2,10 @@ const express = require('express');
 const morgan = require('morgan');
 const colors = require('colors');
 const nodemon = require('nodemon');
-const { join } = require('path');
+const { join, extname } = require('path');
 const cors = require('cors');
 const multer = require('multer');
-const uuid = require('uuid');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
@@ -14,8 +14,7 @@ const app = express();
 const storage = multer.diskStorage({
 	destination: join(__dirname, 'public/img'),
 	filename: (req, file, cb) => {
-		console.log(file);
-		cb(null, `${uuid()}${extname(file.originalname)}`);
+		cb(null, uuidv4() + extname(file.originalname));
 	},
 });
 app.use(multer({ storage }).single('image'));

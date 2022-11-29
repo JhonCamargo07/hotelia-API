@@ -3,7 +3,7 @@ const usersCtrl = {};
 const User = require('./../models/User');
 
 usersCtrl.SignUp = async (req, res) => {
-	console.log('File: ' + req.file);
+	console.log(req.file);
 	if (!req.body.email || !req.body.password) {
 		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
