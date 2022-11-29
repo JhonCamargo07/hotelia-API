@@ -14,7 +14,7 @@ function SingIn() {
 		name: /^[a-zA-ZÀ-ÿ\s]{7,60}$/,
 		email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
 		motive: /^[a-zA-ZÀ-ÿ0-9_.\',+-\s/¿?!:@?()\uD800-\uDBFF\u2702-\u27B0\uF680-\uF6C0\u24C2-\uF251]{10,100}$/,
-		message: /^[a-zA-ZÀ-ÿ0-9_.\',+-\s$%/¿?¡!:@?()\uD800-\uDBFF\u2702-\u27B0\uF680-\uF6C0\u24C2-\uF251]{10,50}$/,
+		message: /^[a-zA-ZÀ-ÿ0-9_.\',+-\s$%/¿?¡#^!:@*?(&)\uD800-\uDBFF\u2702-\u27B0\uF680-\uF6C0\u24C2-\uF251]{10,50}$/,
 	};
 
 	return (

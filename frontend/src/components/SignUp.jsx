@@ -44,9 +44,9 @@ function SignUp() {
 								validate={(values) => {
 									let errors = {};
 
-									if (!values.image) {
-										errors.image = 'Seleccione una imagen';
-									}
+									// if (!values.image) {
+									// 	errors.image = 'Seleccione una imagen';
+									// }
 
 									if (!values.name) {
 										errors.name = 'Por favor ingrese su nombre';
@@ -108,7 +108,7 @@ function SignUp() {
 											<label htmlFor="image" className="form-label">
 												Imagen
 											</label>
-											<input
+											<Field
 												type="file"
 												className="form-control"
 												id="image"
@@ -124,8 +124,6 @@ function SignUp() {
 												name="image"
 												component={() => <span className="text-danger">{errors.image}</span>}
 											/>
-											{'Imagen=' + img}
-											{img != null && 'La imagen: ' + img[0]}
 										</div>
 										<div className="mb-3">
 											<label htmlFor="name" className="form-label">
