@@ -9,7 +9,15 @@ const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 
+app.set('appName', 'Hotelia API - Jhon Camargo');
+app.set('port', process.env.PORT || 64022);
+app.set('host', process.env.HOST || '127.0.0.1');
+
 // Settings
+app.use(cors());
+app.use(morgan('dev'));
+app.use(express.json());
+app.use(express.text());
 
 const storage = multer.diskStorage({
 	destination: join(__dirname, 'public/img'),
@@ -18,26 +26,16 @@ const storage = multer.diskStorage({
 	},
 });
 app.use(multer({ storage }).single('image'));
-app.use(cors());
-app.use(morgan('dev'));
-app.use(express.json());
-app.use(express.text());
 
-// app.use(multer({ dest: join(__dirname, 'public/img') }).single('image'));
-
-app.set('appName', 'Hotelia API - Jhon Camargo');
-app.set('port', process.env.PORT || 64022);
-app.set('host', process.env.HOST || '127.0.0.1');
+app.use('/public', express.static(join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-	if (!req.body.nameAdmin === process.env.USER_MONGODB || !req.body.passwordAdmin === process.env.PASSWORD_MONGODB) {
+	if (req.body.nameAdmin != process.env.USER_MONGODB || req.body.passwordAdmin != process.env.PASSWORD_MONGODB) {
 		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
 		return;
 	}
 	next();
 });
-
-app.use('/public', express.static(join(__dirname, 'public')));
 
 app.use(require('./routes/users.router.js'));
 app.use(require('./routes/room.router.js'));

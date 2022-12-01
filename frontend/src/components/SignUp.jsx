@@ -125,15 +125,66 @@ function SignUp() {
 												component={() => <span className="text-danger">{errors.image}</span>}
 											/>
 										</div>
-										<div className="mb-3">
-											<label htmlFor="name" className="form-label">
-												Nombre
-											</label>
-											<Field type="text" name="name" className="form-control" id="name" />
-											<ErrorMessage
-												name="name"
-												component={() => <span className="text-danger">{errors.name}</span>}
-											/>
+										<div className="row mb-3">
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="name" className="form-label">
+														Nombre
+													</label>
+													<Field type="text" name="name" className="form-control" id="name" />
+													<ErrorMessage
+														name="name"
+														component={() => <span className="text-danger">{errors.name}</span>}
+													/>
+												</div>
+											</div>
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="lastname" className="form-label">
+														Apellido
+													</label>
+													<Field type="text" name="lastname" className="form-control" id="lastname" />
+													<ErrorMessage
+														name="lastname"
+														component={() => <span className="text-danger">{errors.lastname}</span>}
+													/>
+												</div>
+											</div>
+										</div>
+										<div className="row mb-3">
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="birth_date" className="form-label">
+														Fecha de nacimiento
+													</label>
+													<Field
+														type="date"
+														name="birth_date"
+														className="form-control"
+														id="birth_date"
+													/>
+													<ErrorMessage
+														name="birth_date"
+														component={() => <span className="text-danger">{errors.birth_date}</span>}
+													/>
+												</div>
+											</div>
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="gender" className="form-label">
+														Genero
+													</label>
+													<Field as="select" name="gender" className="form-select" id="gender">
+														<option value="hombre">Hombre</option>
+														<option value="mujer">Mujer</option>
+														<option value="otro">Otro</option>
+													</Field>
+													<ErrorMessage
+														name="gender"
+														component={() => <span className="text-danger">{errors.gender}</span>}
+													/>
+												</div>
+											</div>
 										</div>
 										<div className="mb-3">
 											<label htmlFor="emailSignUp" className="form-label">
@@ -145,30 +196,43 @@ function SignUp() {
 												component={() => <span className="text-danger">{errors.email}</span>}
 											/>
 										</div>
-										<div className="mb-3">
-											<label htmlFor="passwordSignUp" className="form-label">
-												Contrase&#241;a
-											</label>
-											<Field type="password" name="password" className="form-control" id="passwordSignUp" />
-											<ErrorMessage
-												name="password"
-												component={() => <span className="text-danger">{errors.password}</span>}
-											/>
-										</div>
-										<div className="mb-3">
-											<label htmlFor="passwordConfirmSignUp" className="form-label">
-												Confirmar contrase&#241;a
-											</label>
-											<Field
-												type="password"
-												name="passwordConfirm"
-												className="form-control"
-												id="passwordConfirmSignUp"
-											/>
-											<ErrorMessage
-												name="passwordConfirm"
-												component={() => <span className="text-danger">{errors.passwordConfirm}</span>}
-											/>
+										<div className="row mb-3">
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="passwordSignUp" className="form-label">
+														Contrase&#241;a
+													</label>
+													<Field
+														type="password"
+														name="password"
+														className="form-control"
+														id="passwordSignUp"
+													/>
+													<ErrorMessage
+														name="password"
+														component={() => <span className="text-danger">{errors.password}</span>}
+													/>
+												</div>
+											</div>
+											<div className="col">
+												<div className="form-outline">
+													<label htmlFor="passwordConfirmSignUp" className="form-label">
+														Confirmar contrase&#241;a
+													</label>
+													<Field
+														type="password"
+														name="passwordConfirm"
+														className="form-control"
+														id="passwordConfirmSignUp"
+													/>
+													<ErrorMessage
+														name="passwordConfirm"
+														component={() => (
+															<span className="text-danger">{errors.passwordConfirm}</span>
+														)}
+													/>
+												</div>
+											</div>
 										</div>
 										{message !== null && !status && <div className="fw-bold text-danger mb-2">{message}</div>}
 										{message !== null && status && <div className="fw-bold text-success mb-2">{message}</div>}

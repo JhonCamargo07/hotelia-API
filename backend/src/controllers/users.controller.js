@@ -3,8 +3,7 @@ const usersCtrl = {};
 const User = require('./../models/User');
 
 usersCtrl.SignUp = async (req, res) => {
-	console.log(req.file);
-	if (!req.body.email || !req.body.password) {
+	if (!req.body.email || !req.body.password || !req.file) {
 		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
@@ -21,17 +20,19 @@ usersCtrl.SignUp = async (req, res) => {
 
 	if (errors.length > 0) {
 		res.json({ success: false, message: errors });
-	} else {
-		const emailUser = await User.findOne({ email: email });
-		if (emailUser) {
-			res.json({ success: false, message: `El usuario ya existe, intente con otro` });
-		} else {
-			const newUser = new User({ name, email, password });
-			newUser.password = await newUser.encryptPassword(password);
-			await newUser.save();
-			res.json({ success: true, message: `Usuario registrado exitosamente`, data: newUser });
-		}
+		return;
 	}
+	const emailUser = await User.findOne({ email: email });
+	if (emailUser) {
+		res.json({ success: false, message: `El usuario ya existe, intente con otro` });
+		return;
+	}
+	const newUser = new User({ name, email });
+	newUser.password = await newUser.encryptPassword(password);
+	newUser.name_img = req.file.filename;
+	newUser.path_img = '/public/img/' + req.file.filename;
+	await newUser.save();
+	res.json({ success: true, message: `Usuario registrado exitosamente`, data: newUser });
 };
 
 usersCtrl.SignIn = async (req, res) => {
@@ -46,16 +47,16 @@ usersCtrl.SignIn = async (req, res) => {
 		.then((user) => {
 			if (!user) {
 				res.json({ success: false, message: 'Las credenciales son incorrectas' });
-			} else {
-				UserNuevo.matchPassword(password, user.password).then((isCorrrect) => {
-					if (!isCorrrect) {
-						res.json({ success: false, message: 'Las credenciales son incorrectas' });
-						return;
-					}
-					res.json({ success: true, message: 'Usuario correcto', data: user });
-					return user;
-				});
+				return;
 			}
+			UserNuevo.matchPassword(password, user.password).then((isCorrrect) => {
+				if (!isCorrrect) {
+					res.json({ success: false, message: 'Las credenciales son incorrectas' });
+					return;
+				}
+				res.json({ success: true, message: 'Usuario correcto', data: user });
+				return user;
+			});
 		})
 		.catch((err) => {
 			res.json({ success: false, message: `Error del sistema ${err}` });

@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const UserSchema = new Schema(
 	{
 		name: { type: String, required: true },
-		apellido: { type: String, required: false },
+		lastname: { type: String, required: false },
 		fecha_nacimiento: { type: Date, required: false },
 		genero: { type: String, required: false },
 		telefono: { type: String, required: false },
@@ -12,7 +12,8 @@ const UserSchema = new Schema(
 		password: { type: String, required: true },
 		pais_origen: { type: String, required: false },
 		tipo_user: { type: String, required: false },
-		img: { type: String, required: false },
+		name_img: { type: String, required: true },
+		path_img: { type: String, required: true },
 		Reserva: [
 			{
 				type: Schema.Types.ObjectId,
