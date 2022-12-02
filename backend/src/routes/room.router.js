@@ -7,6 +7,6 @@ router.get('/rooms', getAllRooms);
 router.post('/room', insertOneRoom);
 router.get('/room/:id', getOneRoom);
 router.put('/room/:id', editOneRoom);
-router.put('/room/:id', deleteOneRoom);
+router.delete('/room/:id', deleteOneRoom);
 
 module.exports = router;

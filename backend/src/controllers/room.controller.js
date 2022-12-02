@@ -27,28 +27,51 @@ roomsCtrl.getOneRoom = async (req, res) => {
 };
 
 roomsCtrl.editOneRoom = async (req, res) => {
-	if (!req.params.id || !req.body.name) {
+	if (
+		!req.body._id ||
+		!req.body.name ||
+		!req.body.capacidad ||
+		!req.body.camas ||
+		!req.body.description ||
+		!req.body.valor_noche ||
+		!req.body.path_img ||
+		!req.body.status
+	) {
 		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
+	// Room.findById(req.params._id).then((room) => {
+		// if (!room) {
+		// 	res.json({ success: false, message: 'Lahabitación con este id no existe' });
+		// }
+	// 	return;
+	// 	// else{
+	// 	// 	res.json({ success: false, message: 'Si existe: ' + room });
+	// 	// }
+	// });
 
-	const { name, capacidad, camas, descripcion, wifi, tv, restroom, nevera, valor_noche, img, status } = req.body;
+
+	const { _id, name, capacidad, camas, description, wifi, tv, restroom, nevera, valor_noche, path_img, status } = req.body;
 
 	Room.findByIdAndUpdate(req.params.id, {
 		name,
 		capacidad,
 		camas,
-		descripcion,
+		description,
 		wifi,
 		tv,
 		restroom,
 		nevera,
 		valor_noche,
-		img,
+		path_img,
 		status,
 	})
-		.then((data) => {
-			res.json({ success: true, message: 'Habitacion actualizada', data: data });
+		.then((room) => {
+			if (!room) {
+				res.json({ success: false, message: 'Lahabitación con este id no existe' });
+				return;
+			}
+			res.json({ success: true, message: 'Habitacion actualizada', data: room });
 		})
 		.catch((error) => {
 			res.json({ success: false, message: 'Ocurrio un error: ' + error });
