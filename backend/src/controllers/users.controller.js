@@ -4,7 +4,7 @@ const User = require('./../models/User');
 
 usersCtrl.SignUp = async (req, res) => {
 	if (!req.body.email || !req.body.password || !req.file) {
-		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	const errors = [];
@@ -19,12 +19,12 @@ usersCtrl.SignUp = async (req, res) => {
 	}
 
 	if (errors.length > 0) {
-		res.json({ success: false, message: errors });
+		res.status(404).json({ success: false, message: errors });
 		return;
 	}
 	const emailUser = await User.findOne({ email: email });
 	if (emailUser) {
-		res.json({ success: false, message: `El usuario ya existe, intente con otro` });
+		res.status(404).json({ success: false, message: `El usuario ya existe, intente con otro` });
 		return;
 	}
 	const newUser = new User({ name, email });
@@ -32,12 +32,12 @@ usersCtrl.SignUp = async (req, res) => {
 	newUser.name_img = req.file.filename;
 	newUser.path_img = '/public/img/' + req.file.filename;
 	await newUser.save();
-	res.json({ success: true, message: `Usuario registrado exitosamente`, data: newUser });
+	res.status(201).json({ success: true, message: `Usuario registrado exitosamente`, data: newUser });
 };
 
 usersCtrl.SignIn = async (req, res) => {
 	if (!req.body.email || !req.body.password) {
-		res.json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	const { name, email, password } = req.body;
@@ -46,20 +46,20 @@ usersCtrl.SignIn = async (req, res) => {
 	const user = await User.findOne({ email: email })
 		.then((user) => {
 			if (!user) {
-				res.json({ success: false, message: 'Las credenciales son incorrectas' });
+				res.status(404).json({ success: false, message: 'Las credenciales son incorrectas' });
 				return;
 			}
 			UserNuevo.matchPassword(password, user.password).then((isCorrrect) => {
 				if (!isCorrrect) {
-					res.json({ success: false, message: 'Las credenciales son incorrectas' });
+					res.status(404).json({ success: false, message: 'Las credenciales son incorrectas' });
 					return;
 				}
-				res.json({ success: true, message: 'Usuario correcto', data: user });
+				res.status(200).json({ success: true, message: 'Usuario correcto', data: user });
 				return user;
 			});
 		})
 		.catch((err) => {
-			res.json({ success: false, message: `Error del sistema ${err}` });
+			res.status(500).json({ success: false, message: `Ocurrio un error: ${error}` });
 			return err;
 		});
 };

@@ -29,13 +29,13 @@ app.use(multer({ storage }).single('image'));
 
 app.use('/public', express.static(join(__dirname, 'public')));
 
-app.use((req, res, next) => {
-	if (req.body.nameAdmin != process.env.USER_MONGODB || req.body.passwordAdmin != process.env.PASSWORD_MONGODB) {
-		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
-		return;
-	}
-	next();
-});
+// app.use((req, res, next) => {
+// 	if (req.body.nameAdmin != process.env.USER_MONGODB || req.body.passwordAdmin != process.env.PASSWORD_MONGODB) {
+// 		res.json({ title: 'Acceso denegado', message: 'El usuario no tiene acceso' });
+// 		return;
+// 	}
+// 	next();
+// });
 
 app.use(require('./routes/users.router.js'));
 app.use(require('./routes/room.router.js'));

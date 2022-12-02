@@ -12,6 +12,6 @@ router.use((req, res, next) => {
 });
 
 router.use((req, res) => {
-	res.json({ messaje: 'error 404', message: 'Page no found' });
+	res.status(404).json({ success: false, message: 'Page no found' });
 });
 module.exports = router;
