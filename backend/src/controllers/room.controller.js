@@ -14,13 +14,13 @@ roomsCtrl.getAllRooms = async (req, res) => {
 
 roomsCtrl.getOneRoom = async (req, res) => {
 	if (!req.params.id) {
-		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(200).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	Room.findById(req.params.id)
 		.then((data) => {
 			if (!data) {
-				res.status(404).json({ success: false, message: 'Habitacion no encontrada' });
+				res.status(200).json({ success: false, message: 'Habitacion no encontrada' });
 				return;
 			}
 			res.status(200).json({ success: true, message: 'Habitacion encontrada', data: data });
@@ -41,7 +41,7 @@ roomsCtrl.editOneRoom = async (req, res) => {
 		!req.body.path_img ||
 		!req.body.status
 	) {
-		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(200).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 
@@ -62,7 +62,7 @@ roomsCtrl.editOneRoom = async (req, res) => {
 	})
 		.then((room) => {
 			if (!room) {
-				res.status(404).json({ success: false, message: 'Lahabitación con este id no existe' });
+				res.status(200).json({ success: false, message: 'Lahabitación con este id no existe' });
 				return;
 			}
 			res.status(200).json({ success: true, message: 'Habitacion actualizada', data: room });
@@ -83,12 +83,12 @@ roomsCtrl.insertOneRoom = async (req, res) => {
 		!req.body.path_img ||
 		!req.body.status
 	) {
-		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(200).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	Room.findById(req.body._id).then((room) => {
 		if (room) {
-			res.status(404).json({ success: false, message: 'Lahabitación con este id ya existe' });
+			res.status(200).json({ success: false, message: 'Lahabitación con este id ya existe' });
 			return;
 		}
 	});
@@ -119,7 +119,7 @@ roomsCtrl.insertOneRoom = async (req, res) => {
 };
 
 roomsCtrl.deleteOneRoom = async (req, res) => {
-	res.status(404).json({ success: false, message: 'Metodo no funcional ' });
+	res.status(200).json({ success: false, message: 'Metodo no funcional ' });
 };
 
 module.exports = roomsCtrl;

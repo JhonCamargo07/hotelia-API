@@ -4,7 +4,7 @@ const User = require('./../models/User');
 
 usersCtrl.SignUp = async (req, res) => {
 	if (!req.body.email || !req.body.password || !req.file) {
-		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(200).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	const errors = [];
@@ -19,12 +19,12 @@ usersCtrl.SignUp = async (req, res) => {
 	}
 
 	if (errors.length > 0) {
-		res.status(404).json({ success: false, message: errors });
+		res.status(200).json({ success: false, message: errors });
 		return;
 	}
 	const emailUser = await User.findOne({ email: email });
 	if (emailUser) {
-		res.status(404).json({ success: false, message: `El usuario ya existe, intente con otro` });
+		res.status(200).json({ success: false, message: `El usuario ya existe, intente con otro` });
 		return;
 	}
 	const newUser = new User({ name, email });
@@ -37,7 +37,7 @@ usersCtrl.SignUp = async (req, res) => {
 
 usersCtrl.SignIn = async (req, res) => {
 	if (!req.body.email || !req.body.password) {
-		res.status(404).json({ success: false, message: 'Los valores no pueden ser nulos' });
+		res.status(200).json({ success: false, message: 'Los valores no pueden ser nulos' });
 		return;
 	}
 	const { name, email, password } = req.body;
@@ -46,12 +46,12 @@ usersCtrl.SignIn = async (req, res) => {
 	const user = await User.findOne({ email: email })
 		.then((user) => {
 			if (!user) {
-				res.status(404).json({ success: false, message: 'Las credenciales son incorrectas' });
+				res.status(200).json({ success: false, message: 'Las credenciales son incorrectas' });
 				return;
 			}
 			UserNuevo.matchPassword(password, user.password).then((isCorrrect) => {
 				if (!isCorrrect) {
-					res.status(404).json({ success: false, message: 'Las credenciales son incorrectas' });
+					res.status(200).json({ success: false, message: 'Las credenciales son incorrectas' });
 					return;
 				}
 				res.status(200).json({ success: true, message: 'Usuario correcto', data: user });

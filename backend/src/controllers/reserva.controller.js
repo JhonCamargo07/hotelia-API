@@ -13,7 +13,7 @@ reservaCtrl.getAllReservas = async (req, res) => {
 };
 
 reservaCtrl.deleteOneReserva = async (req, res) => {
-	res.status(404).json({ success: false, message: 'Metodo no funcional' });
+	res.status(200).json({ success: false, message: 'Metodo no funcional' });
 };
 
 module.exports = reservaCtrl;
